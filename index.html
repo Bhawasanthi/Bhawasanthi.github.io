@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portfolio of B.D.B.A. Thimbirigolla, ICT undergraduate and Java / Spring Boot developer.">
+<title>Thimbirigolla Portfolio</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a drafting-sheet portfolio. Blueprint grid with a cursor spotlight behind the hero,
+   a title-block profile card, mono annotations, and interactive parts that explain the real work
+   (rotating roles, a clickable selection pipeline, skill tabs, project filters, an email composer). */
+:root {
+  --bg: #F4F6FA;
+  --surface: #FFFFFF;
+  --ink: #0E1A33;
+  --muted: #52607A;
+  --line: #D9DFEA;
+  --grid: rgba(36, 71, 224, 0.07);
+  --glow: rgba(36, 71, 224, 0.10);
+  --accent: #2447E0;
+  --accent-ink: #FFFFFF;
+  --hl: #F5A524;
+  --chip: #EAEFFA;
+  --ok: #17835A;
+  --font-display: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+  --font-body: "Inter", "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A1120; --surface: #121B30; --ink: #E8EDF8; --muted: #9AA8C4; --line: #243250;
+    --grid: rgba(124, 151, 255, 0.08); --glow: rgba(124, 151, 255, 0.14);
+    --accent: #7C97FF; --accent-ink: #0A1120; --hl: #F7B955; --chip: #1A2744; --ok: #4CD2A0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A1120; --surface: #121B30; --ink: #E8EDF8; --muted: #9AA8C4; --line: #243250;
+  --grid: rgba(124, 151, 255, 0.08); --glow: rgba(124, 151, 255, 0.14);
+  --accent: #7C97FF; --accent-ink: #0A1120; --hl: #F7B955; --chip: #1A2744; --ok: #4CD2A0;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  transition: background-color .3s, color .3s;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 40; background: var(--bg);
+}
+[hidden] { display: none !important; }
+a { color: inherit; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: 1120px; margin-inline: auto; }
+.mono { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  background: var(--bg); border-bottom: 1px solid var(--line); transition: background-color .3s;
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: var(--font-display); font-weight: 600; }
+.mark { width: 38px; height: 38px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 8px; font-size: 15px; }
+.nav { display: flex; align-items: center; gap: 6px; }
+.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-links a { text-decoration: none; padding: 8px 12px; border-radius: 8px; font-size: 15px; color: var(--muted); font-weight: 500; }
+.nav-links a:hover { color: var(--ink); background: var(--chip); }
+.nav-links a[aria-current="true"] { color: var(--ink); box-shadow: inset 0 -3px 0 var(--hl); border-radius: 8px 8px 0 0; }
+.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer; background: transparent; border: 1px solid var(--line); border-radius: 10px; font-size: 18px; }
+.icon-btn:hover { background: var(--chip); }
+.menu-btn { display: none; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer;
+  font: 600 15px var(--font-body); padding: 13px 20px; border-radius: 10px;
+  border: 1.5px solid var(--ink); color: var(--ink); background: transparent;
+  transition: transform .15s, background-color .2s, filter .2s;
+}
+.btn:hover { background: var(--chip); transform: translateY(-2px); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.1); background: var(--accent); }
+.btn:active { transform: translateY(0); }
+
+/* Hero */
+.hero { position: relative; border-bottom: 1px solid var(--line); overflow: hidden; --sx: 70%; --sy: 30%;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px; }
+.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(520px circle at var(--sx) var(--sy), var(--glow), transparent 70%); }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr); gap: 56px; align-items: center; padding-block: 80px 88px; }
+.hero h1 { font-size: clamp(40px, 6.2vw, 76px); font-weight: 700; letter-spacing: -0.02em; margin-top: 18px; }
+.role { font-family: var(--font-display); font-size: clamp(22px, 3vw, 32px); font-weight: 500; margin-top: 16px; }
+.rot { display: inline-block; color: var(--accent); border-bottom: 3px solid var(--hl); transition: opacity .25s, transform .25s; }
+.rot.swap { opacity: 0; transform: translateY(8px); }
+.hero .lead { font-size: clamp(18px, 2vw, 21px); color: var(--muted); max-width: 34em; margin-top: 20px; }
+.hero .lead b { color: var(--ink); font-weight: 600; }
+.dim { display: flex; align-items: center; gap: 14px; margin-top: 28px; max-width: 520px; }
+.dim span { flex: 1; height: 1px; background: var(--ink); position: relative; }
+.dim span:first-child::before, .dim span:last-child::after { content: ""; position: absolute; top: -6px; width: 1px; height: 13px; background: var(--ink); }
+.dim span:first-child::before { left: 0; }
+.dim span:last-child::after { right: 0; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+.titleblock { background: var(--surface); border: 2px solid var(--ink); border-radius: 4px; position: relative; transition: transform .3s; }
+.titleblock::before, .titleblock::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--hl); }
+.titleblock::before { top: -9px; left: -9px; border-right: 0; border-bottom: 0; }
+.titleblock::after { bottom: -9px; right: -9px; border-left: 0; border-top: 0; }
+.titleblock header { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 2px solid var(--ink); }
+.titleblock dl { margin: 0; }
+.titleblock .row { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.titleblock .row:last-child { border-bottom: 0; }
+.titleblock dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.titleblock dd { margin: 0; font-weight: 500; font-size: 16px; line-height: 1.45; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--ok); margin-right: 8px; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(23, 131, 90, .5); } 70% { box-shadow: 0 0 0 8px rgba(23, 131, 90, 0); } 100% { box-shadow: 0 0 0 0 rgba(23, 131, 90, 0); } }
+
+/* Stats */
+.stats { border-bottom: 1px solid var(--line); }
+.stats .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stat { padding: 28px 24px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.stat:first-child { border-left: 0; padding-left: 0; }
+.stat b { font-family: var(--font-display); font-size: clamp(34px, 4vw, 48px); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 15px; }
+
+/* Sections */
+section.block { padding-block: 88px; border-bottom: 1px solid var(--line); }
+.sec-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 700; letter-spacing: -0.01em; }
+
+.about { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 56px; }
+.about .text { display: flex; flex-direction: column; gap: 18px; max-width: 62ch; }
+.looking { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 28px; align-self: start; display: flex; flex-direction: column; gap: 12px; }
+.looking h3 { font-size: 22px; }
+.looking p { color: var(--muted); font-size: 16px; }
+
+/* Cards with a cursor glow */
+.spot { position: relative; overflow: hidden; }
+.spot::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 65%); }
+.spot:hover::before { opacity: 1; }
+.spot > * { position: relative; }
+
+/* Tabs and segmented controls */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.tab { cursor: pointer; background: transparent; border: 1.5px solid var(--line); border-radius: 8px; padding: 9px 16px; font-weight: 600; font-size: 15px; transition: background-color .2s, border-color .2s, color .2s; }
+.tab:hover { background: var(--chip); }
+.tab[aria-selected="true"], .tab[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.skill-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 32px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px; align-items: start; }
+.skill-panel h3 { font-size: 28px; }
+.skill-panel .used { color: var(--muted); margin-top: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: var(--chip); border-radius: 6px; padding: 6px 12px; font-size: 14.5px; font-weight: 500; transition: transform .15s, background-color .2s, color .2s; }
+.skill-panel .chip { font-size: 16px; padding: 8px 14px; }
+.chip:hover { transform: translateY(-2px); background: var(--accent); color: var(--accent-ink); }
+.soft { margin-top: 20px; color: var(--muted); font-size: 16px; }
+
+/* Projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.project { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 30px; display: flex; flex-direction: column; gap: 18px; transition: transform .25s, border-color .25s; }
+.project:hover { transform: translateY(-4px); border-color: var(--accent); }
+.project.featured { grid-column: 1 / -1; border: 2px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px 40px; }
+.project.featured:hover { border-color: var(--ink); transform: none; }
+.project h3 { font-size: 28px; }
+.project .meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.project p.desc { color: var(--muted); }
+.points { display: flex; flex-direction: column; gap: 10px; }
+.points li { padding-left: 22px; position: relative; font-size: 16px; }
+.points li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 10px; height: 2px; background: var(--accent); }
+.project .col { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.text-link { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid currentColor; }
+
+/* Selection pipeline */
+.flow { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 26px; display: flex; flex-direction: column; gap: 18px; }
+.flow-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.flow-head h4 { font-size: 20px; }
+.steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; position: relative; }
+.step { cursor: pointer; text-align: left; background: transparent; border: 1.5px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 6px; transition: background-color .2s, border-color .2s; min-width: 0; }
+.step:hover { background: var(--chip); }
+.step .n { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.step .t { font-weight: 600; font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
+.step[aria-selected="true"] { border-color: var(--accent); background: var(--chip); box-shadow: inset 0 -4px 0 var(--hl); }
+.step.done { border-color: var(--accent); }
+.bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .4s; }
+.step-detail { background: var(--chip); border-radius: 10px; padding: 18px 20px; min-height: 92px; }
+.step-detail b { font-family: var(--font-display); font-size: 18px; display: block; margin-bottom: 4px; }
+.step-detail span { color: var(--muted); }
+
+/* Experience */
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; }
+.cols h3 { font-size: 24px; margin-bottom: 20px; }
+.entry { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; padding: 18px 8px; border-top: 1px solid var(--line); transition: background-color .2s; }
+.entry:last-child { border-bottom: 1px solid var(--line); }
+.entry:hover { background: var(--chip); }
+.entry .when { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; color: var(--muted); padding-top: 4px; }
+.entry h4 { margin: 0; font-family: var(--font-display); font-size: 19px; line-height: 1.25; }
+.entry p { color: var(--muted); font-size: 15.5px; margin-top: 4px; }
+
+/* Contact */
+.contact .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+.contact h2 { font-size: clamp(34px, 5vw, 54px); font-weight: 700; margin-top: 14px; }
+.contact .lead { color: var(--muted); margin-top: 18px; font-size: 19px; max-width: 30em; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 28px; }
+.mail code { font-family: var(--font-mono); font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-wrap: anywhere; user-select: all; }
+.social { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.composer { background: var(--surface); border: 2px solid var(--ink); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 16px; }
+.composer label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; }
+.composer input, .composer select, .composer textarea { font: 400 16px var(--font-body); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 11px 12px; width: 100%; }
+.composer textarea { min-height: 120px; resize: vertical; }
+.composer .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.status { font-size: 14px; color: var(--muted); min-height: 1.4em; }
+
+footer { padding-block: 32px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+.to-top { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 25;
+  width: 46px; height: 46px; border-radius: 12px; border: 2px solid var(--ink); background: var(--surface); cursor: pointer; font-size: 20px;
+  display: grid; place-items: center; transition: transform .2s, opacity .2s; }
+.to-top:hover { transform: translateY(-3px); }
+.to-top[hidden] { display: none !important; }
+
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 52px 60px; }
+  .about, .cols, .contact .grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .project.featured, .skill-panel { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stats .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:nth-child(3) { border-left: 0; padding-left: 0; }
+  .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+  section.block { padding-block: 64px; }
+  .menu-btn { display: grid; }
+  .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px)); }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px; font-size: 17px; }
+  .nav-links a[aria-current="true"] { box-shadow: inset 4px 0 0 var(--hl); border-radius: 4px; }
+}
+@media (max-width: 480px) {
+  .entry { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .titleblock .row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .project, .skill-panel, .composer { padding: 22px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Back to top"><span class="mark">BT</span><span>B.D.B.A. Thimbirigolla</span></a>
+    <nav class="nav" aria-label="Main">
+      <div class="nav-links" id="links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark theme" title="Switch theme">◐</button>
+      <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+    </nav>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <div>
+        <p class="mono">ICT undergraduate · Sabaragamuwa University of Sri Lanka</p>
+        <h1>B.D.B.A. Thimbirigolla</h1>
+        <p class="role">I’m a <span class="rot" id="rot">Java developer</span></p>
+        <p class="lead">I build <b>web applications in Java and Spring Boot</b> and design visual stories in Photoshop and Animate. I like projects where software solves a real, everyday problem.</p>
+        <div class="dim" aria-hidden="true"><span></span><em class="mono" style="font-style:normal">Java 21 · Spring Boot · MySQL</em><span></span></div>
+        <div class="cta">
+          <a class="btn primary" href="#projects">View my projects</a>
+          <a class="btn" href="https://github.com/Bhawasanthi" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://linkedin.com/in/bhawasanthi-aishcharya-a5517a3b3" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <aside class="titleblock" id="tb" aria-label="Profile summary">
+        <header><span class="mono">Profile</span><span class="mono">Embilipitiya, LK</span></header>
+        <dl>
+          <div class="row"><dt>Studying</dt><dd>BA (Hons) in Information and Communication Technology, minor in Japanese</dd></div>
+          <div class="row"><dt>Main stack</dt><dd>Java · Spring Boot · MySQL · Thymeleaf</dd></div>
+          <div class="row"><dt>Design</dt><dd>Photoshop · Illustrator · Animate · AutoCAD</dd></div>
+          <div class="row"><dt>Languages</dt><dd>English · Japanese (JLPT N4) · Sinhala</dd></div>
+          <div class="row"><dt>Status</dt><dd><span class="dot"></span>Open to internships</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="At a glance">
+    <div class="wrap" id="stats">
+      <div class="stat"><b data-count="3">3</b><span>Projects built</span></div>
+      <div class="stat"><b data-count="4">4</b><span>User roles in my final-year system</span></div>
+      <div class="stat"><b data-count="38">38</b><span>Automated tests written for it</span></div>
+      <div class="stat"><b data-count="2">2</b><span>Report formats: Excel and PDF</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="sec-head"><p class="mono">About</p><h2>Code that follows a real process, from form to final letter</h2></div>
+      <div class="about">
+        <div class="text">
+          <p>I am an ICT undergraduate who enjoys turning a messy, paper-based process into a clear, working system. My strongest work is in Java and Spring Boot, where I care about structure, validation and security as much as features.</p>
+          <p>My final-year project, the Interview Selection System, handles a school’s whole student selection process online: applications, shortlisting, interview marking, results and email letters. I also built a desktop management system for a pet store and veterinary clinic.</p>
+          <p>Outside of code, I work with Adobe Photoshop, Illustrator, Animate and Premiere Pro, and with AutoCAD. A three-month banking traineeship at Regional Development Bank taught me to be accurate and calm when dealing with people every day.</p>
+        </div>
+        <div class="looking spot">
+          <p class="mono">Looking for</p>
+          <h3>An internship or entry-level role in software development</h3>
+          <p>I want to apply what I have learned on real projects, work with an experienced team, and keep growing as a developer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="skills">
+    <div class="wrap">
+      <div class="sec-head"><p class="mono">Skills</p><h2>What I work with, and where I used it</h2></div>
+      <div class="tabs" role="tablist" aria-label="Skill groups" id="skillTabs">
+        <button class="tab" role="tab" aria-selected="true" data-k="backend" id="t-backend">Backend</button>
+        <button class="tab" role="tab" aria-selected="false" data-k="frontend" id="t-frontend">Frontend</button>
+        <button class="tab" role="tab" aria-selected="false" data-k="design" id="t-design">Design</button>
+        <button class="tab" role="tab" aria-selected="false" data-k="tools" id="t-tools">Tools</button>
+      </div>
+      <div class="skill-panel spot" role="tabpanel" id="skillPanel" aria-live="polite">
+        <div>
+          <h3 id="skillTitle">Backend</h3>
+          <p class="used" id="skillUsed">The Interview Selection System (Java 21, Spring Boot, Spring Security, Spring Data JPA, MySQL) and the Pet Store system (VB.NET, MySQL).</p>
+        </div>
+        <div class="chips" id="skillChips">
+          <span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">Spring Security</span><span class="chip">Spring Data JPA</span><span class="chip">MySQL</span><span class="chip">PHP</span><span class="chip">Laravel</span><span class="chip">Python</span><span class="chip">Visual Basic (VB.NET)</span>
+        </div>
+      </div>
+      <p class="soft">Also: communication, leadership, project management, team collaboration, critical and analytical thinking.</p>
+    </div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="sec-head"><p class="mono">Projects</p><h2>Things I have built</h2></div>
+      <div class="tabs" id="filters" aria-label="Filter projects">
+        <button class="tab" aria-pressed="true" data-f="all">All</button>
+        <button class="tab" aria-pressed="false" data-f="web">Web</button>
+        <button class="tab" aria-pressed="false" data-f="desktop">Desktop</button>
+        <button class="tab" aria-pressed="false" data-f="creative">Creative</button>
+      </div>
+      <div class="projects">
+        <article class="project featured spot" data-type="web">
+          <div class="col">
+            <div class="meta"><span class="mono">Final-year project · 2026</span><span class="mono">Web application</span></div>
+            <h3>Interview Selection System</h3>
+            <p class="desc">A role-based web application for President’s College, Embilipitiya. It manages the full student selection process, from online A/L application to final result letters, with separate dashboards for students, section heads, interview panel members and administrators.</p>
+            <div class="chips"><span class="chip">Java 21</span><span class="chip">Spring Boot</span><span class="chip">Spring Security</span><span class="chip">Thymeleaf</span><span class="chip">Spring Data JPA</span><span class="chip">MySQL</span></div>
+            <div><a class="text-link" href="https://github.com/Bhawasanthi" target="_blank" rel="noopener">See my GitHub</a></div>
+          </div>
+          <div class="col">
+            <ul class="points">
+              <li>Automatic O/L shortlisting using rules set per stream and year.</li>
+              <li>Configurable interview marking scale, with cutoff-based final selection by available seats.</li>
+              <li>Email notifications for invitations, results and not-qualified letters.</li>
+              <li>Excel and PDF reports using Apache POI and OpenPDF.</li>
+              <li>Server-side validation of phone, NIC and date fields.</li>
+              <li>BCrypt passwords, role-based access, CSRF protection, login lockout and 38 automated tests.</li>
+            </ul>
+          </div>
+          <div class="flow">
+            <div class="flow-head"><h4>How an application moves through the system</h4><span class="mono">Click a step</span></div>
+            <div class="steps" role="tablist" aria-label="Selection process steps" id="steps"></div>
+            <div class="bar" aria-hidden="true"><i id="flowbar"></i></div>
+            <div class="step-detail" id="stepDetail" aria-live="polite"></div>
+          </div>
+        </article>
+
+        <article class="project spot" data-type="desktop">
+          <div class="meta"><span class="mono">2026</span><span class="mono">Desktop application</span></div>
+          <h3>Pet Store &amp; Veterinary Care Management System</h3>
+          <p class="desc">A desktop system for pet records, customers, products, veterinary and grooming services, appointments and sales.</p>
+          <ul class="points">
+            <li>CRUD operations and role-based Admin and Cashier login.</li>
+            <li>Inventory management, billing and transaction reports.</li>
+            <li>Excel export and receipt printing.</li>
+          </ul>
+          <div class="chips"><span class="chip">VB.NET</span><span class="chip">MySQL</span><span class="chip">Guna UI</span></div>
+        </article>
+
+        <article class="project spot" data-type="creative">
+          <div class="meta"><span class="mono">2026</span><span class="mono">Creative project</span></div>
+          <h3>2D Animation Project</h3>
+          <p class="desc">A short 2D animated story made in Adobe Animate.</p>
+          <ul class="points">
+            <li>Used key frames and motion effects to tell the story.</li>
+            <li>Designed and animated the visual elements for an engaging storytelling experience.</li>
+          </ul>
+          <div class="chips"><span class="chip">Adobe Animate</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="experience">
+    <div class="wrap">
+      <div class="sec-head"><p class="mono">Background</p><h2>Experience and education</h2></div>
+      <div class="cols">
+        <div>
+          <h3>Experience</h3>
+          <div class="entry"><span class="when">3 months</span><div><h4>Banking Trainee, Regional Development Bank</h4><p>Processed customer deposits and withdrawals, helped customers with daily transactions, and kept accurate records following cash-handling procedures.</p></div></div>
+          <div class="entry"><span class="when">Events</span><div><h4>Volunteer Technical Assistant</h4><p>Supported organisation and event-day coordination at university symposium events as a team member.</p></div></div>
+          <h3 style="margin-top:40px">Programs</h3>
+          <div class="entry"><span class="when">2026</span><div><h4>AI Fundamentals and Networking</h4><p>Lanka Education and Research Network (LEARN)</p></div></div>
+          <div class="entry"><span class="when">2023</span><div><h4>3D Modeling and Manufacturing Program</h4><p>American Corner, Matara</p></div></div>
+          <div class="entry"><span class="when">2023</span><div><h4>Leaders for NextGEN Program</h4><p>Headway Learning Solutions</p></div></div>
+        </div>
+        <div>
+          <h3>Education</h3>
+          <div class="entry"><span class="when">2023 – present</span><div><h4>BA (Hons) in Information and Communication Technology</h4><p>Sabaragamuwa University of Sri Lanka. Major in ICT, minor in Japanese.</p></div></div>
+          <div class="entry"><span class="when">2021/2022</span><div><h4>G.C.E. Advanced Level</h4></div></div>
+          <div class="entry"><span class="when">2018</span><div><h4>G.C.E. Ordinary Level</h4></div></div>
+          <h3 style="margin-top:40px">Languages</h3>
+          <div class="entry"><span class="when">English</span><div><h4>Professional working use</h4></div></div>
+          <div class="entry"><span class="when">Japanese</span><div><h4>JLPT N4</h4></div></div>
+          <div class="entry"><span class="when">Sinhala</span><div><h4>Native</h4></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <p class="mono">Contact</p>
+          <h2>Let’s talk about an internship or a project</h2>
+          <p class="lead">I am open to internship and entry-level opportunities in software development. Write a message here, or use the address below.</p>
+          <div class="mail">
+            <code id="email">bhawasanthi2002@gmail.com</code>
+            <button class="btn primary" id="copy" type="button">Copy email</button>
+          </div>
+          <div class="social">
+            <a class="btn" href="https://linkedin.com/in/bhawasanthi-aishcharya-a5517a3b3" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://github.com/Bhawasanthi" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <form class="composer" id="composer" novalidate>
+          <p class="mono">Write a message</p>
+          <label for="f-name">Your name<input id="f-name" type="text" placeholder="Your name" autocomplete="name"></label>
+          <label for="f-topic">Topic
+            <select id="f-topic"><option>Internship opportunity</option><option>Project collaboration</option><option>Just saying hello</option></select>
+          </label>
+          <label for="f-msg">Message<textarea id="f-msg" placeholder="Tell me a little about the role or project."></textarea></label>
+          <div class="actions">
+            <button class="btn primary" type="submit">Open in email app</button>
+            <button class="btn" type="button" id="copyMsg">Copy message</button>
+          </div>
+          <p class="status" id="status" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 B.D.B.A. Thimbirigolla</span><span>Embilipitiya, Sri Lanka</span></div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top" hidden>↑</button>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function $(id) { return document.getElementById(id); }
+
+  /* Theme */
+  try { var saved = localStorage.getItem("portfolio-theme"); if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved); } catch (e) {}
+  $("theme").addEventListener("click", function () {
+    var cur = root.getAttribute("data-theme");
+    if (!cur) cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("portfolio-theme", next); } catch (e) {}
+  });
+
+  /* Mobile menu */
+  var links = $("links"), menu = $("menu");
+  menu.addEventListener("click", function () {
+    var open = links.classList.toggle("open");
+    menu.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.addEventListener("click", function (e) { if (e.target.tagName === "A") { links.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); } });
+
+  /* Scroll progress and back-to-top */
+  var bar = $("progress"), toTop = $("toTop");
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, window.scrollY / h) : 0;
+    bar.style.transform = "scaleX(" + p + ")";
+    toTop.hidden = window.scrollY < 600;
+  }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); });
+
+  /* Active nav link */
+  var anchors = Array.prototype.slice.call(links.querySelectorAll("a"));
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          anchors.forEach(function (a) { a.setAttribute("aria-current", a.getAttribute("href") === "#" + en.target.id ? "true" : "false"); });
+        }
+      });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    ["about", "skills", "projects", "experience", "contact"].forEach(function (id) { io.observe($(id)); });
+  }
+
+  /* Rotating role */
+  var words = ["Java developer", "web application builder", "visual designer"], wi = 0, rot = $("rot");
+  if (!reduce) {
+    setInterval(function () {
+      rot.classList.add("swap");
+      setTimeout(function () { wi = (wi + 1) % words.length; rot.textContent = words[wi]; rot.classList.remove("swap"); }, 260);
+    }, 2600);
+  }
+
+  /* Cursor glow in the hero and on cards */
+  var hero = $("hero");
+  hero.addEventListener("pointermove", function (e) {
+    var r = hero.getBoundingClientRect();
+    hero.style.setProperty("--sx", (e.clientX - r.left) + "px");
+    hero.style.setProperty("--sy", (e.clientY - r.top) + "px");
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".spot"), function (c) {
+    c.addEventListener("pointermove", function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      c.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+
+  /* Count-up numbers */
+  var counted = false;
+  function countUp() {
+    if (counted || reduce) return; counted = true;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function (el) {
+      var target = parseInt(el.getAttribute("data-count"), 10), t0 = null;
+      function tick(t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / 900);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+      }
+      el.textContent = "0"; requestAnimationFrame(tick);
+    });
+  }
+  if ("IntersectionObserver" in window) {
+    var so = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { countUp(); so.disconnect(); } }, { threshold: 0.4 });
+    so.observe($("stats"));
+  }
+
+  /* Skill tabs */
+  var skills = {
+    backend: ["Backend", "The Interview Selection System (Java 21, Spring Boot, Spring Security, Spring Data JPA, MySQL) and the Pet Store system (VB.NET, MySQL).",
+      ["Java", "Spring Boot", "Spring Security", "Spring Data JPA", "MySQL", "PHP", "Laravel", "Python", "Visual Basic (VB.NET)"]],
+    frontend: ["Frontend", "Server-rendered pages in Thymeleaf, with HTML, CSS and JavaScript checks, for the Interview Selection System.",
+      ["HTML", "CSS", "JavaScript", "Thymeleaf", "WordPress"]],
+    design: ["Design", "Adobe Animate for my 2D animation project; Photoshop, Illustrator and Premiere Pro for graphics and video; AutoCAD for drafting.",
+      ["Adobe Photoshop", "Illustrator", "Animate", "Premiere Pro", "AutoCAD"]],
+    tools: ["Tools", "GitHub for version control, IntelliJ for Java, and Visual Studio and VS Code for desktop and web work.",
+      ["GitHub", "IntelliJ", "VS Code", "Visual Studio", "Windows", "Linux"]]
+  };
+  var skillTabs = $("skillTabs");
+  skillTabs.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var d = skills[b.getAttribute("data-k")];
+    Array.prototype.forEach.call(skillTabs.children, function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
+    $("skillTitle").textContent = d[0]; $("skillUsed").textContent = d[1];
+    $("skillChips").innerHTML = d[2].map(function (s) { return '<span class="chip">' + s + "</span>"; }).join("");
+  });
+
+  /* Project filter */
+  var filters = $("filters");
+  filters.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var f = b.getAttribute("data-f");
+    Array.prototype.forEach.call(filters.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    Array.prototype.forEach.call(document.querySelectorAll(".project"), function (p) { p.hidden = !(f === "all" || p.getAttribute("data-type") === f); });
+  });
+
+  /* Selection pipeline */
+  var flow = [
+    ["Applied", "The student submits one online application. Phone, NIC and date fields are validated before anything is saved."],
+    ["Shortlisted", "The system compares the O/L grades with the rules for the stream and year. Applicants who meet every rule are shortlisted. The others become Not qualified and receive a formal letter."],
+    ["Interview scheduled", "The Section Head picks a future date, time and venue. An invitation email is sent and the student also sees it in the portal."],
+    ["Interviewed", "Panel members enter marks on the scale the Admin sets. Interview Assessment is out of 10 and Supporting Documents and Eligibility out of 5."],
+    ["Selected", "Interviewed students are ranked by total marks. The top students, up to the seats available, are selected. The last selected total is the cutoff."],
+    ["Result letters", "Selected students receive an admission letter and the others a result letter. Everything is also shown in the student portal."]
+  ];
+  var stepsEl = $("steps"), detail = $("stepDetail"), fbar = $("flowbar"), cur = 0, auto = !reduce, timer = null;
+  stepsEl.innerHTML = flow.map(function (s, i) {
+    return '<button class="step" role="tab" type="button" data-i="' + i + '"><span class="n">0' + (i + 1) + '</span><span class="t">' + s[0] + "</span></button>";
+  }).join("");
+  function show(i) {
+    cur = i;
+    Array.prototype.forEach.call(stepsEl.children, function (b, k) {
+      b.setAttribute("aria-selected", k === i ? "true" : "false");
+      b.classList.toggle("done", k < i);
+    });
+    detail.innerHTML = "<b>" + flow[i][0] + "</b><span>" + flow[i][1] + "</span>";
+    fbar.style.width = ((i + 1) / flow.length * 100) + "%";
+  }
+  function start() { if (!auto) return; stop(); timer = setInterval(function () { show((cur + 1) % flow.length); }, 4200); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  stepsEl.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    auto = false; stop(); show(parseInt(b.getAttribute("data-i"), 10));
+  });
+  show(0); start();
+
+  /* Contact: copy and composer */
+  var status = $("status");
+  function copyText(text, ok, btn, label) {
+    function done() { if (btn) { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = label; }, 1800); } if (ok) status.textContent = ok; }
+    function fallback() { status.textContent = "Your browser blocked copying. Select the text and press Ctrl+C."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+  }
+  $("copy").addEventListener("click", function () { copyText($("email").textContent, "", $("copy"), "Copy email"); });
+  function build() {
+    var name = $("f-name").value.trim() || "a visitor";
+    var topic = $("f-topic").value, msg = $("f-msg").value.trim();
+    return { subject: topic + " (from your portfolio)", body: "Hi, I’m " + name + ".\n\n" + (msg || "I would like to get in touch.") };
+  }
+  $("composer").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var m = build();
+    window.location.href = "mailto:bhawasanthi2002@gmail.com?subject=" + encodeURIComponent(m.subject) + "&body=" + encodeURIComponent(m.body);
+    status.textContent = "If no email app opened, use Copy message and send it to the address on the left.";
+  });
+  $("copyMsg").addEventListener("click", function () { var m = build(); copyText("Subject: " + m.subject + "\n\n" + m.body, "Message copied. Paste it into your email.", $("copyMsg"), "Copy message"); });
+})();
+</script>
+</body>
+</html>
